@@ -2,27 +2,31 @@ package org.santacs.codekata.kata06;
 
 import java.io.PrintStream;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Anagrams {
 
-    private List<List<String>> elements = Collections.emptyList();
+    private List<AnagramSet> elements = Collections.emptyList();
 
     public void process(Stream<String> words) {
-        elements = findValidAnagramsIn(everyPossibleAnagramsOf(words)).collect(Collectors.toList());
+        elements = findValidAnagramsIn(everyPossibleAnagramsOf(words));
     }
 
-    private Stream<List<String>> findValidAnagramsIn(Map<Word, List<String>> anagrams) {
-        return anagrams.values().stream().filter(anagram -> anagram.size() > 1);
+    private List<AnagramSet> findValidAnagramsIn(Stream<AnagramSet> anagrams) {
+        return anagrams.filter(AnagramSet::isValid).collect(Collectors.toList());
     }
 
-    private Map<Word, List<String>> everyPossibleAnagramsOf(Stream<String> words) {
-        return words.collect(Collectors.groupingBy(Word::new));
+    private Stream<AnagramSet> everyPossibleAnagramsOf(Stream<String> words) {
+        return words.map(Word::new).collect(Collectors.groupingBy(Function.identity())).values()
+                .stream().map(AnagramSet::new);
     }
 
+    // FIXME: Once Anagram class is ready, this can just collect the anagrams, another class can do reading, printing ->
+    // Hexagon
     public void printTo(PrintStream os) {
-        elements.forEach(anagram -> os.println(anagram.stream().collect(Collectors.joining(" "))));
+        elements.forEach(anagram -> os.println(anagram.toString()));
     }
 
     public int getCount() {

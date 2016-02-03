@@ -22,4 +22,9 @@ public class WordTest {
         assertThat(new Word("ab").hashCode() == new Word("ba").hashCode(), is(true));
     }
 
+    @Test
+    public void shouldReturnWordWhenToStringCalled() {
+        assertThat(new Word("ab").toString(), equalTo("ab"));
+    }
+
 }

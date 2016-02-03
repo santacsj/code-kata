@@ -10,10 +10,12 @@ public class Word {
         return String.valueOf(data);
     }
 
+    private final String word;
     private final String wordSortedByChars;
 
     public Word(String word) {
-        wordSortedByChars = sortCharsOf(word);
+        this.word = word;
+        this.wordSortedByChars = sortCharsOf(word);
     }
 
     public boolean anagramOf(Word that) {
@@ -33,6 +35,11 @@ public class Word {
             return false;
         Word that = (Word) obj;
         return anagramOf(that);
+    }
+
+    @Override
+    public String toString() {
+        return word;
     }
 
 }
