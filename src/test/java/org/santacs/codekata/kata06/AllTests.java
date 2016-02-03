@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ WordTest.class, AnagramCollectorTest.class, AnagramPrinterTest.class,
-        WordStreamTest.class, AnagramSystemTest.class })
+        FileWordStreamTest.class, AnagramSystemTest.class })
 
 public class AllTests {
 

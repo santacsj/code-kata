@@ -7,11 +7,11 @@ import java.nio.file.Path;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class WordStream implements Supplier<Stream<Word>> {
+public class FileWordStream implements Supplier<Stream<Word>> {
 
     private final Path file;
 
-    public WordStream(Path file) {
+    public FileWordStream(Path file) {
         this.file = file;
     }
 

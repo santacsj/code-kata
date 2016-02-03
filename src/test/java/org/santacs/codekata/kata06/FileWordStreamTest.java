@@ -8,11 +8,11 @@ import java.util.stream.Stream;
 
 import org.junit.Test;
 
-public class WordStreamTest {
+public class FileWordStreamTest {
 
     @Test
     public void shouldReturnWordsFromFile() {
-        Supplier<Stream<Word>> supplier = new WordStream(TestFiles.path());
+        Supplier<Stream<Word>> supplier = new FileWordStream(TestFiles.path());
         assertThat(supplier.get().count(), not(0));
     }
 }

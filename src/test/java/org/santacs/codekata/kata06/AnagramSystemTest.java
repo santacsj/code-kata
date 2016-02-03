@@ -12,7 +12,7 @@ public class AnagramSystemTest {
 
         AnagramCollector collector = new AnagramCollector();
 
-        collector.process(new WordStream(TestFiles.path()));
+        collector.process(new FileWordStream(TestFiles.path()));
 
         assertThat(collector.getCount(), equalTo(20683));
     }
@@ -20,7 +20,7 @@ public class AnagramSystemTest {
     @Test
     public void shouldPrintAllAnagramSets() throws Exception {
         AnagramCollector collector = new AnagramCollector();
-        collector.process(new WordStream(TestFiles.path()));
+        collector.process(new FileWordStream(TestFiles.path()));
         collector.forEach(new AnagramPrinter(System.out));
     }
 }
