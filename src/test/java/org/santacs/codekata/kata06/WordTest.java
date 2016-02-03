@@ -24,7 +24,7 @@ public class WordTest {
 
     @Test
     public void shouldReturnWordWhenToStringCalled() {
-        assertThat(new Word("ab").toString(), equalTo("ab"));
+        assertThat(new Word("ba").toString(), equalTo("ba"));
     }
 
 }

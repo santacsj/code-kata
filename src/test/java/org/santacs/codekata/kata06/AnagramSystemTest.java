@@ -16,11 +16,4 @@ public class AnagramSystemTest {
 
         assertThat(collector.getCount(), equalTo(20683));
     }
-
-    @Test
-    public void shouldPrintAllAnagramSets() throws Exception {
-        AnagramCollector collector = new AnagramCollector();
-        collector.process(new FileWordStream(TestFiles.path()));
-        collector.forEach(new AnagramPrinter(System.out));
-    }
 }
