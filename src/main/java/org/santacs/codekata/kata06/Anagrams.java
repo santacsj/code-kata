@@ -1,7 +1,8 @@
 package org.santacs.codekata.kata06;
 
-import java.io.PrintStream;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -10,6 +11,7 @@ public class Anagrams {
 
     private List<AnagramSet> elements = Collections.emptyList();
 
+    // FIXME: This should come from a collaborator, here I just want to see Word objects
     public void process(Stream<String> words) {
         elements = findValidAnagramsIn(everyPossibleAnagramsOf(words));
     }
@@ -23,10 +25,8 @@ public class Anagrams {
                 .stream().map(AnagramSet::new);
     }
 
-    // FIXME: Once Anagram class is ready, this can just collect the anagrams, another class can do reading, printing ->
-    // Hexagon
-    public void printTo(PrintStream os) {
-        elements.forEach(anagram -> os.println(anagram.toString()));
+    public void forEach(Consumer<AnagramSet> consumer) {
+        elements.forEach(consumer);
     }
 
     public int getCount() {
