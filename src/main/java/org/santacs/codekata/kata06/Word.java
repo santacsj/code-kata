@@ -4,22 +4,25 @@ import java.util.Arrays;
 
 public class Word {
 
-    private final char[] chars;
-    private final int hashCode;
+    private static String sortCharsOf(String s) {
+        char[] data = s.toCharArray();
+        Arrays.sort(data);
+        return String.valueOf(data);
+    }
+
+    private final String wordSortedByChars;
 
     public Word(String word) {
-        this.chars = word.toCharArray();
-        Arrays.sort(this.chars);
-        this.hashCode = Arrays.hashCode(this.chars);
+        wordSortedByChars = sortCharsOf(word);
     }
 
     public boolean anagramOf(Word that) {
-        return Arrays.equals(chars, that.chars);
+        return wordSortedByChars.equals(that.wordSortedByChars);
     }
 
     @Override
     public int hashCode() {
-        return hashCode;
+        return wordSortedByChars.hashCode();
     }
 
     @Override
