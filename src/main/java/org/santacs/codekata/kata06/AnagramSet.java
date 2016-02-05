@@ -1,6 +1,7 @@
 package org.santacs.codekata.kata06;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class AnagramSet {
@@ -8,7 +9,7 @@ public class AnagramSet {
     private final Collection<Word> elements;
 
     public AnagramSet(Collection<Word> elements) {
-        this.elements = Collections.unmodifiableList(new ArrayList<>(elements));
+        this.elements = new ArrayList<>(elements);
     }
 
     public boolean isValid() {

@@ -11,7 +11,9 @@ public class AnagramCollector {
     private List<AnagramSet> elements = Collections.emptyList();
 
     public void process(Supplier<Stream<Word>> supplier) {
-        process(supplier.get());
+        try (Stream<Word> words = supplier.get()) {
+            process(words);
+        }
     }
 
     private void process(Stream<Word> words) {

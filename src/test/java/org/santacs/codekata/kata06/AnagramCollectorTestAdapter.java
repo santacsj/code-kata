@@ -10,11 +10,11 @@ public class AnagramCollectorTestAdapter implements Supplier<Stream<Word>>, Cons
     private final List<String> words = new LinkedList<>();
     private final List<String> anagrams = new LinkedList<>();
 
-    public void useWords(String... elements) {
+    public void withWords(String... elements) {
         words.addAll(Arrays.asList(elements));
     }
 
-    public boolean hasAnagram(String anagram) {
+    public boolean foundAnAnagram(String anagram) {
         return anagrams.contains(anagram);
     }
 
