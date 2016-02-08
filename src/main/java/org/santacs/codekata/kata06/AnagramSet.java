@@ -12,21 +12,19 @@ public class AnagramSet {
         return new AnagramSet(elements);
     }
 
-    private final Word word;
-    private final List<Word> anagrams;
+    private final List<Word> elements;
 
     public AnagramSet(List<Word> elements) {
-        this.anagrams = elements;
-        this.word = this.anagrams.get(0);
+        this.elements = elements;
     }
 
     public boolean isValid() {
-        return anagrams.size() > 1;
+        return elements.size() > 1;
     }
 
     @Override
     public int hashCode() {
-        return word.hashCode();
+        return elements.hashCode();
     }
 
     @Override
@@ -36,12 +34,12 @@ public class AnagramSet {
         if (!(obj instanceof AnagramSet))
             return false;
         AnagramSet that = (AnagramSet) obj;
-        return word.anagramOf(that.word);
+        return elements.equals(that.elements);
     }
 
     @Override
     public String toString() {
-        return anagrams.stream().map(Word::toString).collect(Collectors.joining(" "));
+        return elements.stream().map(Word::toString).collect(Collectors.joining(" "));
     }
 
 }

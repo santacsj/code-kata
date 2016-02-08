@@ -18,10 +18,6 @@ public class Word {
         this.sortedChars = sortCharsOf(word);
     }
 
-    public boolean anagramOf(Word that) {
-        return sortedChars.equals(that.sortedChars);
-    }
-
     @Override
     public int hashCode() {
         return sortedChars.hashCode();
@@ -34,7 +30,7 @@ public class Word {
         if (!(obj instanceof Word))
             return false;
         Word that = (Word) obj;
-        return anagramOf(that);
+        return sortedChars.equals(that.sortedChars);
     }
 
     @Override

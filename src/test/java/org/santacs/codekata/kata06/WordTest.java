@@ -8,11 +8,6 @@ import org.junit.Test;
 public class WordTest {
 
     @Test
-    public void shouldBeAnagramOfWordOfSameChars() {
-        assertThat(new Word("ab").anagramOf(new Word("ba")), is(true));
-    }
-
-    @Test
     public void shouldEqualToItsAnagram() {
         assertThat(new Word("ab").equals(new Word("ba")), is(true));
     }
@@ -23,7 +18,7 @@ public class WordTest {
     }
 
     @Test
-    public void shouldReturnWordWhenToStringCalled() {
+    public void shouldSupportToString() {
         assertThat(new Word("ba").toString(), equalTo("ba"));
     }
 
