@@ -1,24 +1,47 @@
 package org.santacs.codekata.kata06;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AnagramSet {
 
-    private final Collection<Word> elements;
+    public static AnagramSet anAnagram(String s) {
+        String[] tokens = s.split(" ");
+        List<Word> elements = Arrays.asList(tokens).stream().map(Word::new)
+                .collect(Collectors.toList());
+        return new AnagramSet(elements);
+    }
+
+    private final Word word;
+    private final List<Word> anagrams;
 
     public AnagramSet(Collection<Word> elements) {
-        this.elements = new ArrayList<>(elements);
+        this.anagrams = new ArrayList<>(elements);
+        this.word = this.anagrams.get(0);
     }
 
     public boolean isValid() {
-        return elements.size() > 1;
+        return anagrams.size() > 1;
+    }
+
+    @Override
+    public int hashCode() {
+        return word.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof AnagramSet))
+            return false;
+        AnagramSet that = (AnagramSet) obj;
+        return word.anagramOf(that.word);
     }
 
     @Override
     public String toString() {
-        return elements.stream().map(Word::toString).collect(Collectors.joining(" "));
+        return anagrams.stream().map(Word::toString).collect(Collectors.joining(" "));
     }
 
 }

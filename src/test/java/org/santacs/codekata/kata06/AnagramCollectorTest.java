@@ -2,31 +2,36 @@ package org.santacs.codekata.kata06;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static org.santacs.codekata.kata06.AnagramSet.*;
+
+import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import org.junit.Test;
 
-public class AnagramCollectorTest {
+public class AnagramCollectorTest implements Supplier<Stream<Word>> {
 
+    private final List<String> words = new LinkedList<>();
     private final AnagramCollector collector = new AnagramCollector();
-    private final AnagramCollectorTestAdapter test = new AnagramCollectorTestAdapter();
 
     @Test
     public void shouldMatchUpAnagrams() {
 
-        test.withWords("ab", "ba", "ac", "ca");
+        useWords("ab", "ba", "ac", "ca");
 
-        test.exercise(collector);
+        collector.process(this);
 
-        assertThat(test.foundAnAnagram("ab ba"), is(true));
-        assertThat(test.foundAnAnagram("ac ca"), is(true));
+        assertThat(collector.found(anAnagram("ab ba")), is(true));
+        assertThat(collector.found(anAnagram("ac ca")), is(true));
     }
 
     @Test
     public void shouldIgnoreWordsWithNoAnagrams() {
 
-        test.withWords("ab");
+        useWords("ab");
 
-        test.exercise(collector);
+        collector.process(this);
 
         assertThat(collector.getCount(), equalTo(0));
     }
@@ -34,6 +39,15 @@ public class AnagramCollectorTest {
     @Test
     public void shouldHaveZeroCountWhenEmpty() {
         assertThat(collector.getCount(), equalTo(0));
+    }
+
+    private void useWords(String... elements) {
+        words.addAll(Arrays.asList(elements));
+    }
+
+    @Override
+    public Stream<Word> get() {
+        return words.stream().map(Word::new);
     }
 
 }

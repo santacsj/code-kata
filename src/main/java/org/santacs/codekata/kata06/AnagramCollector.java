@@ -2,7 +2,8 @@ package org.santacs.codekata.kata06;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.*;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,8 +30,8 @@ public class AnagramCollector {
                 .map(AnagramSet::new);
     }
 
-    public void forEach(Consumer<AnagramSet> consumer) {
-        elements.forEach(consumer);
+    public boolean found(AnagramSet anAnagram) {
+        return elements.contains(anAnagram);
     }
 
     public int getCount() {
