@@ -1,22 +1,22 @@
 package org.santacs.codekata.kata06;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class AnagramSet {
 
     public static AnagramSet anAnagramSet(String s) {
         String[] tokens = s.split(" ");
-        List<Word> elements = Arrays.asList(tokens).stream().map(Word::new)
-                .collect(Collectors.toList());
+        List<Word> elements = Arrays.stream(tokens).map(Word::new).collect(Collectors.toList());
         return new AnagramSet(elements);
     }
 
     private final Word word;
     private final List<Word> anagrams;
 
-    public AnagramSet(Collection<Word> elements) {
-        this.anagrams = new ArrayList<>(elements);
+    public AnagramSet(List<Word> elements) {
+        this.anagrams = elements;
         this.word = this.anagrams.get(0);
     }
 
@@ -36,7 +36,7 @@ public class AnagramSet {
         if (!(obj instanceof AnagramSet))
             return false;
         AnagramSet that = (AnagramSet) obj;
-        return word.equals(that.word);
+        return word.anagramOf(that.word);
     }
 
     @Override
