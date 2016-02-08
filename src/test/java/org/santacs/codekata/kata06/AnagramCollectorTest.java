@@ -22,8 +22,8 @@ public class AnagramCollectorTest implements Supplier<Stream<Word>> {
 
         collector.process(this);
 
-        assertThat(collector.found(anAnagram("ab ba")), is(true));
-        assertThat(collector.found(anAnagram("ac ca")), is(true));
+        assertThat(collector.found(anAnagramSet("ab ba")), is(true));
+        assertThat(collector.found(anAnagramSet("ac ca")), is(true));
     }
 
     @Test

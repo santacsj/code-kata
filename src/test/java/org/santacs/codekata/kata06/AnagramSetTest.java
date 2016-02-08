@@ -11,12 +11,12 @@ public class AnagramSetTest {
 
     @Test
     public void shouldEqualToOtherWithSameWords() {
-        assertThat(AnagramSet.anAnagram("ab ba").equals(AnagramSet.anAnagram("ba ab")), is(true));
+        assertThat(AnagramSet.anAnagramSet("ab ba").equals(AnagramSet.anAnagramSet("ba ab")), is(true));
     }
 
     @Test
     public void shouldCreateAnagramSetFromString() {
-        assertThat(AnagramSet.anAnagram("ab ba")
+        assertThat(AnagramSet.anAnagramSet("ab ba")
                 .equals(new AnagramSet(Arrays.asList(new Word("ab"), new Word("ba")))), is(true));
     }
 }

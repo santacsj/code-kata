@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public class AnagramSet {
 
-    public static AnagramSet anAnagram(String s) {
+    public static AnagramSet anAnagramSet(String s) {
         String[] tokens = s.split(" ");
         List<Word> elements = Arrays.asList(tokens).stream().map(Word::new)
                 .collect(Collectors.toList());
@@ -36,7 +36,7 @@ public class AnagramSet {
         if (!(obj instanceof AnagramSet))
             return false;
         AnagramSet that = (AnagramSet) obj;
-        return word.anagramOf(that.word);
+        return word.equals(that.word);
     }
 
     @Override
