@@ -11,20 +11,20 @@ public class Word {
     }
 
     private final String word;
-    private final String wordSortedByChars;
+    private final String sortedChars;
 
     public Word(String word) {
         this.word = word;
-        this.wordSortedByChars = sortCharsOf(word);
+        this.sortedChars = sortCharsOf(word);
     }
 
     public boolean anagramOf(Word that) {
-        return wordSortedByChars.equals(that.wordSortedByChars);
+        return sortedChars.equals(that.sortedChars);
     }
 
     @Override
     public int hashCode() {
-        return wordSortedByChars.hashCode();
+        return sortedChars.hashCode();
     }
 
     @Override
