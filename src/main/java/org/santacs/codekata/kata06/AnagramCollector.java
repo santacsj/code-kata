@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 public class AnagramCollector {
 
-    private Set<AnagramSet> elements = Collections.emptySet();
+    private Set<Anagram> elements = Collections.emptySet();
 
     public void process(Supplier<Stream<Word>> supplier) {
         try (Stream<Word> words = supplier.get()) {
@@ -23,15 +23,15 @@ public class AnagramCollector {
         elements = findValidAnagramsIn(everyPossibleAnagramOf(words));
     }
 
-    private Set<AnagramSet> findValidAnagramsIn(Stream<AnagramSet> anagrams) {
-        return anagrams.filter(AnagramSet::isValid).collect(toSet());
+    private Set<Anagram> findValidAnagramsIn(Stream<Anagram> anagrams) {
+        return anagrams.filter(Anagram::isValid).collect(toSet());
     }
 
-    private Stream<AnagramSet> everyPossibleAnagramOf(Stream<Word> words) {
-        return words.collect(groupingBy(identity())).values().stream().map(AnagramSet::new);
+    private Stream<Anagram> everyPossibleAnagramOf(Stream<Word> words) {
+        return words.collect(groupingBy(identity())).values().stream().map(Anagram::new);
     }
 
-    public boolean found(AnagramSet anAnagram) {
+    public boolean found(Anagram anAnagram) {
         return elements.contains(anAnagram);
     }
 
@@ -39,7 +39,7 @@ public class AnagramCollector {
         return elements.size();
     }
 
-    public void forEachAnagramSet(Consumer<AnagramSet> consumer) {
+    public void forEach(Consumer<Anagram> consumer) {
         elements.forEach(consumer);
     }
 

@@ -2,7 +2,7 @@ package org.santacs.codekata.kata06;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.santacs.codekata.kata06.AnagramSet.*;
+import static org.santacs.codekata.kata06.Anagram.*;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,7 +18,7 @@ public class AnagramSystemTest {
 
         AnagramCollector collector = new AnagramCollector();
 
-        collector.process(aWordFile());
+        collector.process(theTestFile());
 
         assertThat(collector.getCount(), equalTo(20683));
     }
@@ -28,13 +28,13 @@ public class AnagramSystemTest {
 
         AnagramCollector collector = new AnagramCollector();
 
-        collector.process(aWordFile());
+        collector.process(theTestFile());
 
-        assertThat(collector.found(anAnagramSet("crepitus cuprites pictures piecrust")), is(true));
-        assertThat(collector.found(anAnagramSet("paste pates peats septa spate tapes tepas")),
+        assertThat(collector.found(anAnagram("crepitus cuprites pictures piecrust")), is(true));
+        assertThat(collector.found(anAnagram("paste pates peats septa spate tapes tepas")),
                 is(true));
-        assertThat(collector.found(anAnagramSet("punctilio unpolitic")), is(true));
-        assertThat(collector.found(anAnagramSet("sunders undress")), is(true));
+        assertThat(collector.found(anAnagram("punctilio unpolitic")), is(true));
+        assertThat(collector.found(anAnagram("sunders undress")), is(true));
     }
 
     @Test
@@ -42,12 +42,12 @@ public class AnagramSystemTest {
 
         AnagramCollector collector = new AnagramCollector();
 
-        collector.process(aWordFile());
+        collector.process(theTestFile());
 
-        collector.forEachAnagramSet(System.out::println);
+        collector.forEach(System.out::println);
     }
 
-    private FileWordStream aWordFile() {
+    private FileWordStream theTestFile() {
         return new FileWordStream(testFilePath);
     }
 

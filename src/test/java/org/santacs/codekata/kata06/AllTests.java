@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ WordTest.class, AnagramSetTest.class, AnagramCollectorTest.class,
+@SuiteClasses({ WordTest.class, AnagramTest.class, AnagramCollectorTest.class,
         AnagramSystemTest.class })
 public class AllTests {
 

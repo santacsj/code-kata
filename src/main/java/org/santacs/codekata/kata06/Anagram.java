@@ -4,17 +4,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AnagramSet {
+public class Anagram {
 
-    public static AnagramSet anAnagramSet(String s) {
+    public static Anagram anAnagram(String s) {
         String[] tokens = s.split(" ");
         List<Word> elements = Arrays.stream(tokens).map(Word::new).collect(Collectors.toList());
-        return new AnagramSet(elements);
+        return new Anagram(elements);
     }
 
     private final List<Word> elements;
 
-    public AnagramSet(List<Word> elements) {
+    public Anagram(List<Word> elements) {
         this.elements = elements;
     }
 
@@ -31,9 +31,9 @@ public class AnagramSet {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!(obj instanceof AnagramSet))
+        if (!(obj instanceof Anagram))
             return false;
-        AnagramSet that = (AnagramSet) obj;
+        Anagram that = (Anagram) obj;
         return elements.equals(that.elements);
     }
 

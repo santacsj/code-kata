@@ -2,7 +2,7 @@ package org.santacs.codekata.kata06;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.santacs.codekata.kata06.AnagramSet.*;
+import static org.santacs.codekata.kata06.Anagram.*;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -22,8 +22,8 @@ public class AnagramCollectorTest implements Supplier<Stream<Word>> {
 
         collector.process(this);
 
-        assertThat(collector.found(anAnagramSet("ab ba")), is(true));
-        assertThat(collector.found(anAnagramSet("ac ca")), is(true));
+        assertThat(collector.found(anAnagram("ab ba")), is(true));
+        assertThat(collector.found(anAnagram("ac ca")), is(true));
     }
 
     @Test
