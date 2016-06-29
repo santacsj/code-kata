@@ -18,11 +18,11 @@ public class Door {
     }
 
     public void choose() {
-        this.chosen = true;
+        chosen = true;
     }
 
     public void unchoose() {
-        this.chosen = false;
+        chosen = false;
     }
 
     public boolean isChosen() {
@@ -30,18 +30,15 @@ public class Door {
     }
 
     public void reveal() {
-        this.revealed = true;
+        revealed = true;
     }
 
     public boolean isRevealable() {
-        return hidesAGoat() && !isChosen();
+        return !chosen && Prize.Goat == prize;
     }
 
     public boolean isChoosable() {
-        return !(isChosen() || revealed);
+        return !(chosen || revealed);
     }
 
-    private boolean hidesAGoat() {
-        return Prize.Goat == prize;
-    }
 }

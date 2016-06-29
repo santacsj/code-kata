@@ -1,8 +1,6 @@
 package org.santacs.codekata.montyhall;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Created by santacs on 29/06/16.
@@ -22,16 +20,20 @@ public class GameSet {
     }
 
     public void chooseARandomDoor() {
-        chooseDoor(new Random().nextInt(doors.size()));
+        choose(aRandomDoor());
     }
 
-    private void chooseDoor(int number) {
+    private void choose(int door) {
         chosenDoor().ifPresent(Door::unchoose);
-        doors.get(number).choose();
+        doors.get(door).choose();
     }
 
     private Optional<Door> chosenDoor() {
         return doors.stream().filter(Door::isChosen).findAny();
+    }
+
+    private int aRandomDoor() {
+        return new Random().nextInt(doors.size());
     }
 
     public void revealGoat() {
@@ -39,11 +41,19 @@ public class GameSet {
     }
 
     public Prize openChosenDoor() {
-        return chosenDoor().map(Door::open).orElse(null);
+        return open(chosenDoor());
+    }
+
+    private Prize open(Optional<Door> door) {
+        return door.map(Door::open).orElse(null);
     }
 
     public void chooseOtherDoor() {
-        chooseDoor(doors.indexOf(otherDoor()));
+        choose(otherDoor());
+    }
+
+    private void choose(Door door) {
+        choose(doors.indexOf(door));
     }
 
     private Door otherDoor() {
