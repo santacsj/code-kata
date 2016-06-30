@@ -5,31 +5,33 @@ import java.util.*;
 /**
  * Created by santacs on 29/06/16.
  */
-public class GameSet {
+public class GameShow {
 
-    public static GameSet withShuffledDoors() {
+    public static GameShow withShuffledDoors() {
         List<Door> doors = Arrays.asList(new Door(Prize.Goat), new Door(Prize.Goat), new Door(Prize.Car));
         Collections.shuffle(doors);
-        return new GameSet(doors);
+        return new GameShow(doors);
     }
 
     private final List<Door> doors;
+    private Door chosen;
 
-    public GameSet(Collection<Door> doors) {
+    public GameShow(Collection<Door> doors) {
         this.doors = new ArrayList<>(doors);
     }
 
-    public void chooseARandomDoor() {
-        choose(aRandomDoor());
+    public void chooseRandomDoor() {
+        choose(doors.get(aRandomDoor()));
     }
 
-    private void choose(int door) {
+    private void choose(Door door) {
         chosenDoor().ifPresent(Door::unchoose);
-        doors.get(door).choose();
+        door.choose();
+        chosen = door;
     }
 
     private Optional<Door> chosenDoor() {
-        return doors.stream().filter(Door::isChosen).findAny();
+        return Optional.ofNullable(chosen);
     }
 
     private int aRandomDoor() {
@@ -41,22 +43,11 @@ public class GameSet {
     }
 
     public Prize openChosenDoor() {
-        return open(chosenDoor());
-    }
-
-    private Prize open(Optional<Door> door) {
-        return door.map(Door::open).orElse(null);
+        return chosenDoor().map(Door::open).orElse(null);
     }
 
     public void chooseOtherDoor() {
-        choose(otherDoor());
+        choose(doors.stream().filter(Door::isChoosable).findAny().get());
     }
 
-    private void choose(Door door) {
-        choose(doors.indexOf(door));
-    }
-
-    private Door otherDoor() {
-        return doors.stream().filter(Door::isChoosable).findAny().get();
-    }
 }

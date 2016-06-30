@@ -16,39 +16,39 @@ public class MontyHallTest {
     }
 
     @Test
-    public void contestantReceivesPrizeFromMonty() throws Exception {
-        Monty monty = new Monty();
+    public void contestantReceivesPrizeFromGameShowHost() throws Exception {
+        GameShowHost aGameShowHost = new GameShowHost();
         Contestant aContestant = new Contestant();
-        monty.playWith(aContestant);
+        aGameShowHost.playGameWith(aContestant);
         assertNotNull(aContestant.winning());
     }
 
     @Test
     public void contestantSticksWithTheSameDoor() throws Exception {
-        GameSet aGameSet = GameSet.withShuffledDoors();
+        GameShow aGameShow = GameShow.withShuffledDoors();
         Contestant aContestant = new Contestant();
-        aContestant.chooseADoorOn(aGameSet);
-        Prize previousPrize = aGameSet.openChosenDoor();
-        aGameSet.revealGoat();
-        aContestant.reconsiderItsChoiceOfDoorsOn(aGameSet);
-        assertEquals(previousPrize, aGameSet.openChosenDoor());
+        aContestant.chooseDoorOn(aGameShow);
+        Prize previousPrize = aGameShow.openChosenDoor();
+        aGameShow.revealGoat();
+        aContestant.reconsiderTheChoiceOfDoorsOn(aGameShow);
+        assertEquals(previousPrize, aGameShow.openChosenDoor());
     }
 
     @Test
     public void trickyContestantSwitchesToTheOtherDoor() throws Exception {
-        GameSet aGameSet = GameSet.withShuffledDoors();
-        Contestant aContestant = new TrickyContestant();
-        aContestant.chooseADoorOn(aGameSet);
-        Prize previousPrize = aGameSet.openChosenDoor();
-        aGameSet.revealGoat();
-        aContestant.reconsiderItsChoiceOfDoorsOn(aGameSet);
-        assertNotEquals(previousPrize, aGameSet.openChosenDoor());
+        GameShow aGameShow = GameShow.withShuffledDoors();
+        Contestant aTrickyContestant = new TrickyContestant();
+        aTrickyContestant.chooseDoorOn(aGameShow);
+        Prize previousPrize = aGameShow.openChosenDoor();
+        aGameShow.revealGoat();
+        aTrickyContestant.reconsiderTheChoiceOfDoorsOn(aGameShow);
+        assertNotEquals(previousPrize, aGameShow.openChosenDoor());
     }
 
     @Test
     public void testAssumptions() throws Exception {
-        System.out.printf("Stick Win %%: %f\n", calculateWinPercentFor(new Contestant()));
-        System.out.printf("Switch Win %%: %f\n", calculateWinPercentFor(new TrickyContestant()));
+        System.out.printf("Stick Win %%: %f%n", calculateWinPercentFor(new Contestant()));
+        System.out.printf("Switch Win %%: %f%n", calculateWinPercentFor(new TrickyContestant()));
     }
 
     private double calculateWinPercentFor(Contestant contestant) {
@@ -59,8 +59,8 @@ public class MontyHallTest {
     }
 
     private Prize playARoundWith(Contestant contestant) {
-        Monty monty = new Monty();
-        monty.playWith(contestant);
+        GameShowHost gameShowHost = new GameShowHost();
+        gameShowHost.playGameWith(contestant);
         return contestant.winning();
     }
 }
