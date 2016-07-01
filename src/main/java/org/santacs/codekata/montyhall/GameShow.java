@@ -38,8 +38,12 @@ public class GameShow {
         return doors.get(door);
     }
 
+    protected int doorCount() {
+        return doors.size();
+    }
+
     protected int aRandomDoor() {
-        return new Random().nextInt(doors.size());
+        return new Random().nextInt(doorCount());
     }
 
     public void revealGoat() {
