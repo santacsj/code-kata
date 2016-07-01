@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -30,7 +29,7 @@ public class MontyHallTest {
     @Test
     public void gameShowShouldChooseOneDoorOnly() throws Exception {
         Door car = new Door(Prize.Car), otherCar = new Door(Prize.Car);
-        GameShow aGameShow = new GameShow(Arrays.asList(car, otherCar));
+        GameShow aGameShow = new GameShow(car, otherCar);
         aGameShow.choose(car);
         assertTrue(!car.isChoosable() & otherCar.isChoosable());
         aGameShow.choose(otherCar);
@@ -40,7 +39,7 @@ public class MontyHallTest {
     @Test
     public void gameShowShouldOpenChosenDoor() throws Exception {
         Door goat = new Door(Prize.Goat);
-        GameShow aGameShow = new GameShow(Collections.singleton(goat));
+        GameShow aGameShow = new GameShow(goat);
         aGameShow.choose(goat);
         assertEquals(goat.open(), aGameShow.openChosenDoor());
     }
@@ -56,7 +55,7 @@ public class MontyHallTest {
     @Test
     public void gameShowShouldReveaGoat() throws Exception {
         Door goat = new Door(Prize.Goat), otherGoat = new Door(Prize.Goat);
-        GameShow aGameShow = new GameShow(Arrays.asList(goat, otherGoat));
+        GameShow aGameShow = new GameShow(goat, otherGoat);
         aGameShow.choose(goat);
         aGameShow.revealGoat();
         assertFalse(otherGoat.isChoosable());

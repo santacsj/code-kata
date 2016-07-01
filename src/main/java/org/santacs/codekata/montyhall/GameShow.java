@@ -16,6 +16,10 @@ public class GameShow {
     private final List<Door> doors;
     private Door chosen;
 
+    public GameShow(Door... doors) {
+        this(Arrays.asList(doors));
+    }
+
     public GameShow(Collection<Door> doors) {
         this.doors = new ArrayList<>(doors);
     }
