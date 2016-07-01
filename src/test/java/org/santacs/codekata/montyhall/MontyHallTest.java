@@ -3,10 +3,12 @@ package org.santacs.codekata.montyhall;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.BiConsumer;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class MontyHallTest {
 
@@ -22,6 +24,55 @@ public class MontyHallTest {
         Door aDoor = new Door(Prize.Goat);
         aDoor.reveal();
         assertFalse(aDoor.isChoosable());
+    }
+
+    @Test
+    public void gameShowShouldChooseOneDoorOnly() throws Exception {
+        Door car = new Door(Prize.Car), otherCar = new Door(Prize.Car);
+        GameShow aGameShow = new GameShow(Arrays.asList(car, otherCar));
+
+        aGameShow.choose(car);
+        assertTrue(!car.isChoosable());
+        assertTrue(otherCar.isChoosable());
+
+        aGameShow.choose(otherCar);
+        assertTrue(car.isChoosable());
+        assertTrue(!otherCar.isChoosable());
+    }
+
+    @Test
+    public void gameShowShouldOpenChosenDoor() throws Exception {
+        Door goat = new Door(Prize.Goat);
+        GameShow aGameShow = new GameShow(Collections.singleton(goat));
+        aGameShow.choose(goat);
+        assertEquals(goat.open(), aGameShow.openChosenDoor());
+    }
+
+    @Test
+    public void gameShowShouldReveaGoat() throws Exception {
+        Door goat = new Door(Prize.Goat), otherGoat = new Door(Prize.Goat), car = new Door(Prize.Car);
+        GameShow aGameShow = new GameShow(Arrays.asList(goat, otherGoat, car));
+        aGameShow.choose(goat);
+        aGameShow.revealGoat();
+        assertFalse(otherGoat.isChoosable());
+    }
+
+    @Test
+    public void gameShowShouldChooseOtherDoor() throws Exception {
+        Door goat = new Door(Prize.Goat), otherGoat = new Door(Prize.Goat), car = new Door(Prize.Car);
+        GameShow aGameShow = new GameShow(Arrays.asList(goat, otherGoat, car));
+        aGameShow.choose(goat);
+        aGameShow.revealGoat();
+        aGameShow.chooseOtherDoor();
+        assertEquals(car.open(), aGameShow.openChosenDoor());
+    }
+
+    @Test
+    public void gameShowShouldChooseARandomDoor() throws Exception {
+        List<Door> doors = Arrays.asList(new Door(Prize.Goat), new Door(Prize.Goat), new Door(Prize.Car));
+        GameShow aGameShow = new GameShow(doors);
+        aGameShow.chooseRandomDoor();
+        assertEquals(doors.size() - 1, doors.stream().filter(Door::isChoosable).count());
     }
 
     @Test

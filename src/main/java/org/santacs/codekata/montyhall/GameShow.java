@@ -24,17 +24,17 @@ public class GameShow {
         choose(doors.get(aRandomDoor()));
     }
 
-    private void choose(Door door) {
+    protected void choose(Door door) {
         chosenDoor().ifPresent(Door::unchoose);
         door.choose();
         chosen = door;
     }
 
-    private Optional<Door> chosenDoor() {
+    protected Optional<Door> chosenDoor() {
         return Optional.ofNullable(chosen);
     }
 
-    private int aRandomDoor() {
+    protected int aRandomDoor() {
         return new Random().nextInt(doors.size());
     }
 
