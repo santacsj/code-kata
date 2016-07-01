@@ -25,10 +25,6 @@ public class Door {
         chosen = false;
     }
 
-    public boolean isChosen() {
-        return chosen;
-    }
-
     public void reveal() {
         revealed = true;
     }

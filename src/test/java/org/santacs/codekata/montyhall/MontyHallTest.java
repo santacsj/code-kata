@@ -1,12 +1,21 @@
 package org.santacs.codekata.montyhall;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.stream.IntStream;
+import java.util.function.BiConsumer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class MontyHallTest {
+
+    @Test
+    public void doorCannotBeRevealedWhenItIsChosen() throws Exception {
+        Door aDoor = new Door(Prize.Goat);
+        aDoor.choose();
+        assertFalse(aDoor.isRevealable());
+    }
 
     @Test
     public void doorCannotBeChosenAfterItIsRevealed() throws Exception {
@@ -16,51 +25,30 @@ public class MontyHallTest {
     }
 
     @Test
-    public void contestantReceivesPrizeFromMonty() throws Exception {
-        Monty monty = new Monty();
-        Contestant aContestant = new Contestant();
-        monty.playWith(aContestant);
-        assertNotNull(aContestant.winning());
-    }
-
-    @Test
     public void contestantSticksWithTheSameDoor() throws Exception {
-        GameSet aGameSet = GameSet.withShuffledDoors();
-        Contestant aContestant = new Contestant();
-        aContestant.chooseADoorOn(aGameSet);
-        Prize previousPrize = aGameSet.openChosenDoor();
-        aGameSet.revealGoat();
-        aContestant.reconsiderItsChoiceOfDoorsOn(aGameSet);
-        assertEquals(previousPrize, aGameSet.openChosenDoor());
+        firstAndFinalPrizeShould(Assert::assertEquals, new Contestant());
     }
 
     @Test
     public void trickyContestantSwitchesToTheOtherDoor() throws Exception {
-        GameSet aGameSet = GameSet.withShuffledDoors();
-        Contestant aContestant = new TrickyContestant();
-        aContestant.chooseADoorOn(aGameSet);
-        Prize previousPrize = aGameSet.openChosenDoor();
-        aGameSet.revealGoat();
-        aContestant.reconsiderItsChoiceOfDoorsOn(aGameSet);
-        assertNotEquals(previousPrize, aGameSet.openChosenDoor());
+        firstAndFinalPrizeShould(Assert::assertNotEquals, new TrickyContestant());
     }
 
     @Test
-    public void testAssumptions() throws Exception {
-        System.out.printf("Stick Win %%: %f\n", calculateWinPercentFor(new Contestant()));
-        System.out.printf("Switch Win %%: %f\n", calculateWinPercentFor(new TrickyContestant()));
+    public void contestantReceivesPrizeFromGameShowHost() throws Exception {
+        Contestant aContestant = new Contestant();
+        new GameShowHost().playGameWith(aContestant);
+        assertNotNull(aContestant.winning());
     }
 
-    private double calculateWinPercentFor(Contestant contestant) {
-        return IntStream.range(0, 1000)
-                .mapToObj(round -> playARoundWith(contestant))
-                .filter(Prize.Car::equals)
-                .count() / 1000f * 100;
+    private void firstAndFinalPrizeShould(BiConsumer<Prize, Prize> assertion, Contestant aContestant) {
+        GameShow aGameShow = GameShow.withShuffledDoors();
+        aContestant.chooseDoorOn(aGameShow);
+        Prize firstPrize = aGameShow.openChosenDoor();
+        aGameShow.revealGoat();
+        aContestant.reconsiderTheChoiceOfDoorsOn(aGameShow);
+        Prize finalPrize = aGameShow.openChosenDoor();
+        assertion.accept(firstPrize, finalPrize);
     }
 
-    private Prize playARoundWith(Contestant contestant) {
-        Monty monty = new Monty();
-        monty.playWith(contestant);
-        return contestant.winning();
-    }
 }

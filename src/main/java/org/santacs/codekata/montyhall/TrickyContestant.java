@@ -6,7 +6,7 @@ package org.santacs.codekata.montyhall;
 public class TrickyContestant extends Contestant {
 
     @Override
-    public void reconsiderItsChoiceOfDoorsOn(GameSet gameSet) {
-        gameSet.chooseOtherDoor();
+    public void reconsiderTheChoiceOfDoorsOn(GameShow gameShow) {
+        gameShow.chooseOtherDoor();
     }
 }

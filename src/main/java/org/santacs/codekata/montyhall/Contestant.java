@@ -7,15 +7,17 @@ public class Contestant {
 
     private Prize prize;
 
-    public void chooseADoorOn(GameSet gameSet) {
-        gameSet.chooseARandomDoor();
+    public void chooseDoorOn(GameShow gameShow) {
+        gameShow.chooseRandomDoor();
     }
 
-    public void reconsiderItsChoiceOfDoorsOn(GameSet gameSet) {
+    public void reconsiderTheChoiceOfDoorsOn(GameShow gameShow) {
         // do nothing
     }
 
-    public void receive(Prize prize) { this.prize = prize; }
+    public void receive(Prize prize) {
+        this.prize = prize;
+    }
 
     public Prize winning() {
         return prize;
