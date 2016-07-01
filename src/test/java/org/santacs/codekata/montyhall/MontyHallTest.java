@@ -1,12 +1,21 @@
 package org.santacs.codekata.montyhall;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.stream.IntStream;
+import java.util.function.BiConsumer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class MontyHallTest {
+
+    @Test
+    public void doorCannotBeRevealedWhenItIsChosen() throws Exception {
+        Door aDoor = new Door(Prize.Goat);
+        aDoor.choose();
+        assertFalse(aDoor.isRevealable());
+    }
 
     @Test
     public void doorCannotBeChosenAfterItIsRevealed() throws Exception {
@@ -16,51 +25,30 @@ public class MontyHallTest {
     }
 
     @Test
-    public void contestantReceivesPrizeFromGameShowHost() throws Exception {
-        GameShowHost aGameShowHost = new GameShowHost();
-        Contestant aContestant = new Contestant();
-        aGameShowHost.playGameWith(aContestant);
-        assertNotNull(aContestant.winning());
-    }
-
-    @Test
     public void contestantSticksWithTheSameDoor() throws Exception {
-        GameShow aGameShow = GameShow.withShuffledDoors();
-        Contestant aContestant = new Contestant();
-        aContestant.chooseDoorOn(aGameShow);
-        Prize previousPrize = aGameShow.openChosenDoor();
-        aGameShow.revealGoat();
-        aContestant.reconsiderTheChoiceOfDoorsOn(aGameShow);
-        assertEquals(previousPrize, aGameShow.openChosenDoor());
+        firstAndFinalPrizeShould(Assert::assertEquals, new Contestant());
     }
 
     @Test
     public void trickyContestantSwitchesToTheOtherDoor() throws Exception {
-        GameShow aGameShow = GameShow.withShuffledDoors();
-        Contestant aTrickyContestant = new TrickyContestant();
-        aTrickyContestant.chooseDoorOn(aGameShow);
-        Prize previousPrize = aGameShow.openChosenDoor();
-        aGameShow.revealGoat();
-        aTrickyContestant.reconsiderTheChoiceOfDoorsOn(aGameShow);
-        assertNotEquals(previousPrize, aGameShow.openChosenDoor());
+        firstAndFinalPrizeShould(Assert::assertNotEquals, new TrickyContestant());
     }
 
     @Test
-    public void testAssumptions() throws Exception {
-        System.out.printf("Stick Win %%: %f%n", calculateWinPercentFor(new Contestant()));
-        System.out.printf("Switch Win %%: %f%n", calculateWinPercentFor(new TrickyContestant()));
+    public void contestantReceivesPrizeFromGameShowHost() throws Exception {
+        Contestant aContestant = new Contestant();
+        new GameShowHost().playGameWith(aContestant);
+        assertNotNull(aContestant.winning());
     }
 
-    private double calculateWinPercentFor(Contestant contestant) {
-        return IntStream.range(0, 1000)
-                .mapToObj(round -> playARoundWith(contestant))
-                .filter(Prize.Car::equals)
-                .count() / 1000f * 100;
+    private void firstAndFinalPrizeShould(BiConsumer<Prize, Prize> assertion, Contestant aContestant) {
+        GameShow aGameShow = GameShow.withShuffledDoors();
+        aContestant.chooseDoorOn(aGameShow);
+        Prize firstPrize = aGameShow.openChosenDoor();
+        aGameShow.revealGoat();
+        aContestant.reconsiderTheChoiceOfDoorsOn(aGameShow);
+        Prize finalPrize = aGameShow.openChosenDoor();
+        assertion.accept(firstPrize, finalPrize);
     }
 
-    private Prize playARoundWith(Contestant contestant) {
-        GameShowHost gameShowHost = new GameShowHost();
-        gameShowHost.playGameWith(contestant);
-        return contestant.winning();
-    }
 }
