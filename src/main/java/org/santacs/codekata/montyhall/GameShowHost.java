@@ -8,7 +8,7 @@ public class GameShowHost {
     private final GameShow gameShow;
 
     public GameShowHost() {
-        this(GameShow.withShuffledDoors());
+        this(GameShow.newStandardGame());
     }
 
     public GameShowHost(GameShow gameShow) {

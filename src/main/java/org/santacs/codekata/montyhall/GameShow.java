@@ -7,7 +7,7 @@ import java.util.*;
  */
 public class GameShow {
 
-    public static GameShow withShuffledDoors() {
+    public static GameShow newStandardGame() {
         List<Door> doors = Arrays.asList(new Door(Prize.Goat), new Door(Prize.Goat), new Door(Prize.Car));
         Collections.shuffle(doors);
         return new GameShow(doors);
@@ -21,7 +21,11 @@ public class GameShow {
     }
 
     public void chooseRandomDoor() {
-        choose(doors.get(aRandomDoor()));
+        choose(get(aRandomDoor()));
+    }
+
+    protected Optional<Door> chosenDoor() {
+        return Optional.ofNullable(chosen);
     }
 
     protected void choose(Door door) {
@@ -30,8 +34,8 @@ public class GameShow {
         chosen = door;
     }
 
-    protected Optional<Door> chosenDoor() {
-        return Optional.ofNullable(chosen);
+    protected Door get(int door) {
+        return doors.get(door);
     }
 
     protected int aRandomDoor() {
